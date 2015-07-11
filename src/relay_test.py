@@ -1,42 +1,39 @@
 #!/usr/bin/python3
 
-import RPi.GPIO as GPIO
 import time
-
-v = { 1: 17,
-      2: 27,
-      3: 22,
-      4: 10,
-      5:  9,
-      6: 11 }
+import RPi.GPIO as GPIO
+from collections import OrderedDict
 
 GPIO.setmode(GPIO.BCM)
 
-for i in v.values():
+pumps = { 1: 17,
+          2: 27,
+          3: 22,
+          4: 10,
+          5:  9,
+          6: 11 }
+
+ports = {v:k for k,v in pumps.items()}
+
+for i in pumps.values():
     GPIO.setup(i, GPIO.OUT)
     GPIO.output(i, GPIO.HIGH)
 
-sleepTime = 0.1
+sleepTime = 0.15
 
 try:
-    GPIO.output(17, GPIO.LOW)
-    print("ONE")
-    time.sleep(sleepTime)
-    GPIO.output(27, GPIO.LOW)
-    print("TWO")
-    time.sleep(sleepTime)
-    GPIO.output(22, GPIO.LOW)
-    print("THREE")
-    time.sleep(sleepTime)
-    GPIO.output(10, GPIO.LOW)
-    print("FOUR")
-    time.sleep(sleepTime)
-    GPIO.output( 9, GPIO.LOW)
-    print("FIVE")
-    time.sleep(sleepTime)
-    GPIO.output(11, GPIO.LOW)
-    print("SIX")
-    time.sleep(sleepTime)
+    #while(True):
+    for x in range(10):
+        for pump, port in OrderedDict(sorted(pumps.items())).items():
+            GPIO.output(port, GPIO.LOW)
+            print(pump)
+            time.sleep(sleepTime)
+    
+        #for pump, port in OrderedDict(reversed(sorted(pumps.items()))).items():
+        for pump, port in OrderedDict(sorted(pumps.items())).items():
+            GPIO.output(port, GPIO.HIGH)
+            print(pump)
+            time.sleep(sleepTime)
 
     GPIO.cleanup()
     print("done.")

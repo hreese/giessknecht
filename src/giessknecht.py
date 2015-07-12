@@ -76,7 +76,7 @@ def do_schedule(sleepTime=waitInbetween):
     logging.info("Starting irrigation cycle:")
     for pump, rtime in runtimes.items():
         port = pumps[pump]
-        logging.info("Running pump %d (%d) for %f seconds", pump, port, rtime)
+        logging.info("Running pump %2d (pin %2d) for %5.2f seconds", pump, port, rtime)
         GPIO.output(port, GPIO.LOW)
         time.sleep(rtime)
         GPIO.output(port, GPIO.HIGH)

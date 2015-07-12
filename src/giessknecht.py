@@ -7,8 +7,10 @@ import logging
 import sys
 import time
 
-# CONFIGURATION
 #
+# START CONFIGURATION
+#
+
 # Edit these maps to match your GPIO configuration.
 # Pumps/relays are numbered 1..8. If pump number 1
 # is connected to GPIO 17 (BCM ordering), add
@@ -30,19 +32,23 @@ pumps = {
 # but then you have to think for yourself *g*). To have pump number 1
 # run for 12.5 seconds, add
 #     1: 12.5
-# to this dict.
-runtimes = {
-    1: 10,
-    2: 8,
-    3: 4,
-    4: 20
-}
+# to this list. You may trigger a single pump multiple times, execution
+# order is the same as this list.
+runtimes = OrderedDict([
+    (5, 10),
+    (1,  2),
+    (2,  3),
+    (3,  4),
+    (4,  1)
+])
 
 # Wait this many seconds between switching off one pump and activating
 # the next one.
 waitInbetween = 0.5
 
+#
 # END CONFIGURATION
+#
 
 def initialize():
     # configure logging
@@ -68,7 +74,7 @@ def reset_gpio():
 # Run irrigation schedule
 def do_schedule(sleepTime=waitInbetween):
     logging.info("Starting irrigation cycle:")
-    for pump, rtime in OrderedDict(sorted(runtimes.items())).items():
+    for pump, rtime in runtimes.items():
         port = pumps[pump]
         logging.info("Running pump %d (%d) for %f seconds", pump, port, rtime)
         GPIO.output(port, GPIO.LOW)

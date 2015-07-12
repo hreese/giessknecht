@@ -1,0 +1,12 @@
+[Unit]
+Description=Set GPIO pins used by giessknecht to HIGH
+DefaultDependencies=no
+After=sysinit.target udev-finish.target
+Before=basic.target
+
+[Service]
+ExecStart=/usr/local/bin/giessknecht.py --onlyreset
+Restart=no
+
+[Install]
+WantedBy=basic.target

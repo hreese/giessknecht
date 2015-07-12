@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily irrigation cycle
+
+[Timer]
+OnCalendar=*-*-* 06:00:00
+Persistent=no
+WakeSystem=yes
+
+[Install]
+WantedBy=timers.target

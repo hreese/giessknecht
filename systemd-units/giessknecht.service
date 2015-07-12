@@ -1,0 +1,6 @@
+[Unit]
+Description=Execute irrigation cycle
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/giessknecht.py

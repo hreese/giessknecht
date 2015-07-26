@@ -5,14 +5,21 @@ try:
 except RuntimeError:
     print("Error importing RPi.GPIO!")
 
+from threading import Lock
 import logging
 import sys
 import time
 
 FLOWSENSOR = 7
 
+counterlock = Lock()
+flowcounter = { FLOWSENSOR: 0 }
+
 def edge_detected(chan):
-    print(".", end="")
+    counterlock.acquire(blocking=True, timeout=-1)
+    global flowcounter
+    flowcounter[chan] += 1
+    counterlock.release()
 
 if __name__ == "__main__":
     # configure logging
@@ -29,6 +36,15 @@ if __name__ == "__main__":
 
     GPIO.add_event_detect(FLOWSENSOR, GPIO.RISING, callback=edge_detected)
 
-    input("Waiting")
+    try:
+        while 1:
+            time.sleep(1)
+            counterlock.acquire(blocking=True, timeout=-1)
+            ticks = flowcounter[FLOWSENSOR]
+            print(ticks/60*7)
+            flowcounter[FLOWSENSOR] = 0
+            counterlock.release()
+    except KeyboardInterrupt:
+        pass
 
     GPIO.cleanup()

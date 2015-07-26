@@ -1,0 +1,25 @@
+{
+    "global": {
+        "wait_between_pumps": 0.5,
+        "flow_sensor_q":      7
+    },
+    "pumps": {
+        "kaesten_gross": 17,
+        "kaesten_klein": 27,
+        "tomaten":       22,
+        "kleinkrams":    10
+        },
+    "valves": {
+        "tomaten":     9,
+        "kleinkrams": 11
+    },
+    "flowsensors": {
+        "tomaten": 7
+    },
+    "runtimes": {
+        "kaesten_gross": 3,
+        "kaesten_klein": 2,
+        "tomaten":       5,
+        "kleinkrams":    4
+    }
+}

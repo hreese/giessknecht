@@ -3,4 +3,4 @@ Description=Execute irrigation cycle
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/giessknecht.py
+ExecStart=/usr/local/bin/giessknecht.py schedule.json

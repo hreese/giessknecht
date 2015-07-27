@@ -1,7 +1,7 @@
 {
     "global": {
         "wait_between_pumps": 0.5,
-        "flow_sensor_q":      7
+        "flowticks_per_liter": 490
     },
     "pumps": {
         "kaesten_gross": 17,
@@ -17,9 +17,9 @@
         "tomaten": 7
     },
     "runtimes": {
-        "kaesten_gross": 3,
-        "kaesten_klein": 2,
-        "tomaten":       5,
-        "kleinkrams":    4
+        "kaesten_gross": 0.2,
+        "kaesten_klein": 0.1,
+        "tomaten":       4,
+        "kleinkrams":    1
     }
 }

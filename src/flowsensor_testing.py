@@ -14,6 +14,7 @@ FLOWSENSOR = 7
 
 counterlock = Lock()
 flowcounter = { FLOWSENSOR: 0 }
+globalticks = 0
 
 def edge_detected(chan):
     counterlock.acquire(blocking=True, timeout=-1)
@@ -41,10 +42,13 @@ if __name__ == "__main__":
             time.sleep(1)
             counterlock.acquire(blocking=True, timeout=-1)
             ticks = flowcounter[FLOWSENSOR]
-            print(ticks/60*7)
+            #print(ticks/60*7)
+            print(ticks)
+            globalticks += flowcounter[FLOWSENSOR]
             flowcounter[FLOWSENSOR] = 0
             counterlock.release()
     except KeyboardInterrupt:
         pass
 
     GPIO.cleanup()
+    print(globalticks)

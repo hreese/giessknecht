@@ -6,20 +6,19 @@
     "pumps": {
         "kaesten_gross": 17,
         "kaesten_klein": 27,
-        "tomaten":       22,
-        "kleinkrams":    10
+        "tomaten":       9,
+        "kleinkrams":    9
         },
     "valves": {
-        "tomaten":     9,
-        "kleinkrams": 11
+        "tomaten":    22,
+        "kleinkrams": 10
     },
     "flowsensors": {
-        "tomaten": 7
     },
     "runtimes": {
-        "kaesten_gross": 0.2,
-        "kaesten_klein": 0.1,
-        "tomaten":       4,
-        "kleinkrams":    1
+        "kaesten_gross": 60,
+        "kaesten_klein": 27,
+        "tomaten":       15,
+        "kleinkrams":    14.5
     }
 }

@@ -89,8 +89,6 @@ def initialize(config=config):
 
     # Configure all assigned GPIO pins
     reset_gpio()
-    for i in config['flowsensors'].values():
-        GPIO.add_event_detect(i, GPIO.RISING, callback=flowcounter.incr_counter)
 
 ## Run irrigation schedule
 def do_schedule(config=config):
@@ -102,6 +100,9 @@ def do_schedule(config=config):
         # reset flow sensor
         if name in config["flowsensors"]:
             flowcounter.reset_counter(config["flowsensors"][name])
+            # add event listener
+            p = config["flowsensors"][name]
+            GPIO.add_event_detect(p, GPIO.RISING, callback=flowcounter.incr_counter)
 
         # open valve
         if name in config['valves']:
@@ -127,6 +128,9 @@ def do_schedule(config=config):
             counterval = flowcounter.reset_counter(config["flowsensors"][name])
             timediff = time.time() - counterval['starttime']
             logging.info("Cycle         %16s (pin %2d) did %6d ticks in %5d seconds, that's approximatly %3.2f liters", name, config['flowsensors'][name], counterval['ticks'], timediff, counterval['ticks']/config["global"]["flowticks_per_liter"])
+            # remove event listener
+            p = config["flowsensors"][name]
+            GPIO.remove_event_detect(p)
 
         # wait a while before starting the next cycle
         time.sleep(config['global']['wait_between_pumps'])
